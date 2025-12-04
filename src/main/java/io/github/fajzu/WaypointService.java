@@ -12,7 +12,7 @@ public class WaypointService {
     public void create(final UUID uuid,
                        final Waypoint waypoint) {
         this.waypointMap
-                .computeIfAbsent(uuid, k -> new ConcurrentHashMap<>())
+                .computeIfAbsent(uuid, k -> new HashMap<>())
                 .put(waypoint.uuid(), waypoint);
     }
 
@@ -26,10 +26,10 @@ public class WaypointService {
         return this.waypointMap.computeIfAbsent(playerUUID, k -> new HashMap<>()).get(uuid);
     }
 
-    public Waypoint find(final UUID playerUUID,
+    public Waypoint find(final UUID uuid,
                          final String name) {
         return this.waypointMap
-                .computeIfAbsent(playerUUID, k -> new HashMap<>())
+                .computeIfAbsent(uuid, k -> new HashMap<>())
                 .values()
                 .stream()
                 .filter(waypoint -> waypoint.name().equalsIgnoreCase(name))

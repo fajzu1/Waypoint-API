@@ -18,37 +18,34 @@ public class WaypointProvider {
 
     private final static Logger LOGGER = Logger.getLogger("waypoint-api");
 
-    private final WaypointService waypointService;
-    private final WaypointDispatcher waypointDispatcher;
+    private WaypointService waypointService;
+    private WaypointDispatcher waypointDispatcher;
 
-    private final TrackedWaypointFactory trackedWaypointFactory;
+    private TrackedWaypointFactory trackedWaypointFactory;
 
     private WaypointProvider(final Plugin plugin) {
         final Stopwatch stopWatch = Stopwatch.createStarted();
-        final WaypointStyleResolver styleResolver = new WaypointStyleResolver();
 
-        this.trackedWaypointFactory = new TrackedWaypointFactory(styleResolver);
-
-        this.waypointService = new WaypointService();
-        this.waypointDispatcher = new WaypointDispatcher(this.trackedWaypointFactory);
-
-        if (!plugin.getServer().getPluginManager().isPluginEnabled("PacketEvents")) {
-            WaypointConstants.DEPENDENCY_NOT_FOUND.forEach(string -> {
-                LOGGER.log(Level.SEVERE, string);
-            });
+        if (!plugin.getServer().getPluginManager().isPluginEnabled("packetevents")) {
+            WaypointConstants.DEPENDENCY_NOT_FOUND.forEach(string -> LOGGER.log(Level.SEVERE, string));
 
             plugin.getServer().shutdown();
             return;
         }
 
         if (PacketEvents.getAPI().getVersion().isOlderThan(PEVersion.fromString("1.21.5"))) {
-            WaypointConstants.OLD_VERSION.forEach(string -> {
-                LOGGER.log(Level.SEVERE, string);
-            });
+            WaypointConstants.OLD_VERSION.forEach(string -> LOGGER.log(Level.SEVERE, string));
 
             plugin.getServer().shutdown();
             return;
         }
+
+        final WaypointStyleResolver styleResolver = new WaypointStyleResolver();
+
+        this.trackedWaypointFactory = new TrackedWaypointFactory(styleResolver);
+
+        this.waypointService = new WaypointService();
+        this.waypointDispatcher = new WaypointDispatcher(this.trackedWaypointFactory);
 
         LOGGER.log(Level.FINE, "Successfully Injected WaypointProvider in " + stopWatch.elapsed(TimeUnit.MILLISECONDS));
     }
@@ -79,8 +76,8 @@ public class WaypointProvider {
         return this.waypointService.find(playerUUID, uuid);
     }
 
-    public Waypoint find(final @NotNull UUID playerUUID, @NotNull String name) {
-        return this.waypointService.find(playerUUID, name);
+    public Waypoint find(final @NotNull UUID uuid, @NotNull String name) {
+        return this.waypointService.find(uuid, name);
     }
 
     public void track(final @NotNull Player player,
