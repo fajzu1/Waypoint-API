@@ -25,7 +25,7 @@ public class WaypointProvider {
         final Stopwatch stopWatch = Stopwatch.createStarted();
 
         if (!plugin.getServer().getPluginManager().isPluginEnabled("packetevents")) {
-            PacketEvents.setAPI(SpigotPacketEventsBuilder.build((Plugin) this));
+            PacketEvents.setAPI(SpigotPacketEventsBuilder.build(plugin));
 
             PacketEvents.getAPI().load();
             return;
