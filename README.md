@@ -11,6 +11,8 @@
 - Lightweight and fast integration
 - Fully documented API structure
 
+- ⏯ Video: [Link](https://www.youtube.com/watch?v=FkM1QbLYQs0)
+
 ## 🧰 Requirements
 
 - Server version 1.21.6+
