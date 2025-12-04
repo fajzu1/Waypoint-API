@@ -12,8 +12,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WaypointProvider {
+
+    private final static Logger LOGGER = Logger.getLogger("waypoint-api");
 
     private final WaypointService waypointService;
     private final WaypointDispatcher waypointDispatcher;
@@ -31,7 +34,7 @@ public class WaypointProvider {
 
         if (!plugin.getServer().getPluginManager().isPluginEnabled("PacketEvents")) {
             WaypointConstants.DEPENDENCY_NOT_FOUND.forEach(string -> {
-                plugin.getLogger().log(Level.SEVERE, string);
+                LOGGER.log(Level.SEVERE, string);
             });
 
             plugin.getServer().shutdown();
@@ -40,7 +43,7 @@ public class WaypointProvider {
 
         if (PacketEvents.getAPI().getVersion().isOlderThan(PEVersion.fromString("1.21.5"))) {
             WaypointConstants.OLD_VERSION.forEach(string -> {
-                plugin.getLogger().log(Level.SEVERE, string);
+                LOGGER.log(Level.SEVERE, string);
             });
 
             plugin.getServer().shutdown();

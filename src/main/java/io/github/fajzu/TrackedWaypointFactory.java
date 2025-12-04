@@ -11,11 +11,11 @@ import com.github.retrooper.packetevents.util.Vector3i;
 public class TrackedWaypointFactory {
     private final WaypointStyleResolver styleResolver;
 
-    public TrackedWaypointFactory(WaypointStyleResolver styleResolver) {
+    public TrackedWaypointFactory(final WaypointStyleResolver styleResolver) {
         this.styleResolver = styleResolver;
     }
 
-    public TrackedWaypoint create(Waypoint waypoint) {
+    public TrackedWaypoint create(final Waypoint waypoint) {
         final WaypointIcon icon = new WaypointIcon(
                 styleResolver.resolve(waypoint),
 

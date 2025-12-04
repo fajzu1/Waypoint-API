@@ -4,7 +4,7 @@ import com.github.retrooper.packetevents.resources.ResourceLocation;
 
 public class WaypointStyleResolver {
 
-    public ResourceLocation resolve(Waypoint waypoint) {
+    public ResourceLocation resolve(final Waypoint waypoint) {
         if (waypoint.style() != null) {
             return waypoint.style().resourceLocation();
         }
