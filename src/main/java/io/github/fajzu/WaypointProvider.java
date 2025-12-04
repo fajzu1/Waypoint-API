@@ -79,6 +79,10 @@ public class WaypointProvider {
         return this.waypointService.find(playerUUID, uuid);
     }
 
+    public Waypoint find(final @NotNull UUID playerUUID, @NotNull String name) {
+        return this.waypointService.find(playerUUID, name);
+    }
+
     public void track(final @NotNull Player player,
                       final @NotNull Waypoint waypoint) {
         this.waypointDispatcher.track(player, waypoint);

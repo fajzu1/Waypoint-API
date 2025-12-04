@@ -26,6 +26,18 @@ public class WaypointService {
         return this.waypointMap.computeIfAbsent(playerUUID, k -> new HashMap<>()).get(uuid);
     }
 
+    public Waypoint find(final UUID playerUUID,
+                         final String name) {
+        return this.waypointMap
+                .computeIfAbsent(playerUUID, k -> new HashMap<>())
+                .values()
+                .stream()
+                .filter(waypoint -> waypoint.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+
     public Map<UUID, Waypoint> findAll(final UUID uuid) {
         return new ConcurrentHashMap<>(this.waypointMap.get(uuid));
     }
